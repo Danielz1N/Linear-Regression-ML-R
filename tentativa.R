@@ -1,7 +1,21 @@
-data <- read.csv('../teste.csv')
-attach(data)
-X <- matrix(c(rep(1,5),size,bedrooms),5)
-Y <- as.matrix(price)
+normalize <- function(x){
+  z=matrix(0,nrow(x),ncol(x))
+  for(i in 1:nrow(x)){
+    for(j in 1:ncol(x)){
+      if(is.na(x[i,j])){
+        x[i,j]=0
+      }
+    }
+  }
+  for(i in 1:nrow(x)){
+    for(j in 1:ncol(x)){
+        z[i,j] = (x[i,j] - mean(x[i,]))/sd(x[i,]) 
+    }
+  }
+  return(z)
+}
+
+
 # define the gradient function dJ/dtheata: 1/m * (h(x)-y))*x where h(x) = x*theta
 # in matrix form this is as follows:
 grad <- function(x, y, theta) {
@@ -23,6 +37,6 @@ grad.descent <- function(x,y, maxit){
 
 
 # results without feature scaling
-print(grad.descent(x,1000))
 
+print(grad.descent(X,Y,1000))
 
